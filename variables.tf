@@ -7,6 +7,10 @@ variable "product_id" {
   default = "prd_SPM"
 }
 
+variable "property_name" {
+  type = string
+}
+
 variable "enrollment_id" {
   # The enrollment ID as defined in CPS
   default = 74470

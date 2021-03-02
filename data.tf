@@ -8,17 +8,16 @@
 */
 
 data "akamai_contract" "default" {
-  group = ""
+    group_name = "Akamai Internal-1-7KLGU"
 }
-
 /*
 
   The fully qualified name of the group you wish to associate with the provider, as it appears in luna
 
 */
-
 data "akamai_group" "default" {
-	name = ""
+    group_name = "Akamai Internal-1-7KLGU"
+    contract_id = data.akamai_contract.default.id
 }
 
 data "akamai_cp_code" "default" {
@@ -32,9 +31,9 @@ data "akamai_cp_code" "default" {
 
    */
 
-   name = ""
-   group = "${data.akamai_group.default.id}"
-   contract = "${data.akamai_contract.default.id}"
+   name = "jalane-vod.akamaized.net"
+   group_id = data.akamai_group.default.id
+   contract_id = data.akamai_contract.default.id
 }
 
 
@@ -43,7 +42,7 @@ data "akamai_cp_code" "default" {
 data "template_file" "init" {
 
   # The below value assumes 'rules.json' is tokenized and lives in the same directory as the other .tf files
-  template = "${file("${path.module}/rules.json")}"
+  template = file("${path.module}/rules.json")
   vars = {
 
     /*
@@ -51,7 +50,7 @@ data "template_file" "init" {
       List variable replacement mapping, as defined in 'variables.tf'
 
     */
-    origin = "${var.origin}"
-    mpulse-api = "${var.mpulse-api}"
+    origin = var.origin
+    mpulse-api = var.mpulse-api
   }
 }
